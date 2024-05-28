@@ -10,43 +10,49 @@ import { EffectCards, Pagination, Navigation, Autoplay } from "swiper/modules";
 import Arrow from "../assets/Arrow.svg";
 
 const Carousel = () => {
-  const [beers, setBeers] = useState([]);
+  const [pokemons, setPokemons] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredBeers, setFilteredBeers] = useState([]);
+  const [filteredPokemons, setFilteredPokemons] = useState([]);
 
   useEffect(() => {
-    const fetchBeers = async () => {
-      const response = await fetch("https://api.sampleapis.com/beers/ale");
+    const fetchPokemons = async () => {
+      const response = await fetch(
+        "https://pokeapi.co/api/v2/pokemon?limit=20"
+      );
       const data = await response.json();
-      setBeers(data.slice(0, 10));
+      const fetches = data.results.map((pokemon) =>
+        fetch(pokemon.url).then((res) => res.json())
+      );
+      const pokemonData = await Promise.all(fetches);
+      setPokemons(pokemonData);
     };
 
-    fetchBeers();
+    fetchPokemons();
   }, []);
 
   useEffect(() => {
-    setFilteredBeers(
-      beers.filter((beer) =>
-        beer.name.toLowerCase().includes(searchTerm.toLowerCase())
+    setFilteredPokemons(
+      pokemons.filter((pokemon) =>
+        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
-  }, [searchTerm, beers]);
+  }, [searchTerm, pokemons]);
 
   return (
     <MainContainer>
       <SearchContainer>
         <SearchInput
           type="text"
-          placeholder="Search beers..."
+          placeholder="Search Pokémon..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <SearchResults>
-          {filteredBeers.map((beer) => (
-            <BeerCard key={beer.id}>
-              <img src={beer.image} alt={beer.name} />
-              <h3>{beer.name}</h3>
-            </BeerCard>
+          {filteredPokemons.map((pokemon) => (
+            <Card key={pokemon.id}>
+              <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+              <h3 style={{ textTransform: "capitalize" }}>{pokemon.name}</h3>
+            </Card>
           ))}
         </SearchResults>
       </SearchContainer>
@@ -62,8 +68,8 @@ const Carousel = () => {
           modules={[EffectCards, Pagination, Navigation, Autoplay]}
           className="mySwiper"
         >
-          {beers.map((beer) => (
-            <SwiperSlide key={beer.id}>
+          {pokemons.map((pokemon) => (
+            <SwiperSlide key={pokemon.id}>
               <div
                 style={{
                   display: "flex",
@@ -73,12 +79,18 @@ const Carousel = () => {
                 }}
               >
                 <img
-                  src={beer.image}
-                  alt={beer.name}
-                  style={{ width: "100px", height: "100px" }}
+                  src={pokemon.sprites.front_default}
+                  alt={pokemon.name}
+                  style={{ width: "200px", height: "200px" }}
                 />
-                <h1 style={{ fontSize: "20px", fontWeight: "bold" }}>
-                  {beer.name.split(" ")[0]}
+                <h1
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {pokemon.name.split(" ")[0]}
                 </h1>
               </div>
             </SwiperSlide>
@@ -122,7 +134,7 @@ const SearchResults = styled.div`
   margin-top: 80px;
 `;
 
-const BeerCard = styled.div`
+const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
