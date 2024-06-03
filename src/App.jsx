@@ -1,15 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Carousel from "./pages/Carousel";
+import CollegeSelector from "./pages/CollegeSelector";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route exact path="/" element={<Carousel />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <CollegeSelector />;
 }
 
 export default App;

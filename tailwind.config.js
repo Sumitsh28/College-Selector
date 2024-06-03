@@ -33,5 +33,4 @@ export default {
       "3xl": "1604px",
     },
   },
-  plugins: [],
 };
