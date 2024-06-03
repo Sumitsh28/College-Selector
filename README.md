@@ -1,8 +1,30 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# College Selector Interface
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Live Link: https://college-selector-blush.vercel.app/
+
+
+Built using React.js
+
+- College Selection Dropdown
+-  Display College Logo
+- Added Responsiveness for all screen sizes
+
+Technical Specifications
+
+- Framework: React with Material-UI.
+- Handle edge cases, such as API failures or missing images.
+
+
+
+
+
+![Logo](https://github.com/Sumitsh28/College-Selector/blob/main/Screenshot%20(24).png?raw=true)
+
+
+![Logo](https://github.com/Sumitsh28/College-Selector/blob/main/Screenshot%20(25).png?raw=true)
+
+
+
+
